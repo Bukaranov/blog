@@ -124,11 +124,9 @@ class Article extends \yii\db\ActiveRecord
 
     public function saveTags($tags)
     {
-        if (is_array($tags))
-        {
+        if (is_array($tags)) {
             $this->clearCurrentTags();
-            foreach ($tags as $tag_id)
-            {
+            foreach ($tags as $tag_id) {
                 $tag = Teg::findOne($tag_id);
                 $this->link('tags', $tag);
 
@@ -170,4 +168,11 @@ class Article extends \yii\db\ActiveRecord
     {
         return Article::find()->orderBy('date desc')->limit(4)->all();
     }
+
+    public function saveArticle()
+    {
+        $this->user_id = Yii::$app->user->id;
+        $this->save();
+    }
+
 }

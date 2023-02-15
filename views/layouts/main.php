@@ -53,8 +53,17 @@ PublicAsset::register($this);
                 </ul>
                 <div class="i_con">
                     <ul class="nav navbar-nav text-uppercase">
-                        <li><a href="/site/login">Login</a></li>
-                        <li><a href="/site/views">Register</a></li>
+                        <?php if(Yii::$app->user->isGuest):?>
+                            <li><a href="<?= Url::toRoute(['auth/login'])?>">Login</a></li>
+                            <li><a href="<?= Url::toRoute(['auth/signup'])?>">Register</a></li>
+                        <?php else: ?>
+                            <?= Html::beginForm(['/auth/logout'], 'post')
+                            . Html::submitButton(
+                                'Logout (' . Yii::$app->user->identity->name . ')',
+                                ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
+                            )
+                            . Html::endForm() ?>
+                        <?php endif;?>
                     </ul>
                 </div>
 
